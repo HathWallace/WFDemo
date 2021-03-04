@@ -43,17 +43,5 @@ namespace ActivityLib.Toolbox
 
             xd.Save(Path);
         }
-
-        public bool? Read(int id)
-        {
-            if (!File.Exists(Path)) return null;
-
-            var xd = new XmlDocument();
-            xd.Load(Path);
-
-            var node = xd.SelectSingleNode($"Workflow/workflow[@Id={id}]");
-            if (node == null) return null;
-            return bool.Parse(node.Attributes["IsCounterSign"].Value);
-        }
     }
 }

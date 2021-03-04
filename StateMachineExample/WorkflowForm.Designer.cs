@@ -1,6 +1,6 @@
 ﻿namespace StateMachineExample
 {
-    partial class MainForm
+    partial class WorkflowForm
     {
         /// <summary>
         /// Required designer variable.

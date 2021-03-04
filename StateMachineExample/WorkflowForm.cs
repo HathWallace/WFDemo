@@ -3,25 +3,26 @@ using System.Activities;
 using System.Activities.DurableInstancing;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 using ActivityLib;
 using ActivityLib.Toolbox;
 
 namespace StateMachineExample
 {
-    public partial class MainForm : Form
+    public partial class WorkflowForm : Form
     {
         private int id = -1;
 
-        private SqlWorkflowInstanceStore instanceStore = null;
+        //private WorkflowApplication wfApp = null;
 
-        private WorkflowApplication instance = null;
+        private WorkflowRun workflowRun;
 
-        public MainForm(SqlWorkflowInstanceStore instanceStore = null)
+        public WorkflowForm()
         {
-            this.instanceStore = instanceStore;
             InitializeComponent();
 
+            CheckForIllegalCrossThreadCalls = false;
             if (File.Exists(Dao.Path)) File.Delete(Dao.Path);
             UpdateControl();
 
@@ -29,42 +30,36 @@ namespace StateMachineExample
 
         private void startBTN_Click(object sender, EventArgs e)
         {
-            var dict = new Dictionary<string, object> { { "Id", ++id } };
-            instance = new WorkflowApplication(new MyWorkflow(), dict);
-            instance.InstanceStore = instanceStore;
-            WorkFlowEvent(instance);
-            instance.Run();
-            new Dao().Create(id);
+            var dict = new Dictionary<string, object> { { "Id", id } };
+            workflowRun = new WorkflowRun(++id, MyInvoke);
+
         }
 
         private void getNamesBTN_Click(object sender, EventArgs e)
         {
-            var list = new SortedSet<string>()
+            var list = new SortedSet<string>
             {
                 "h2",
                 "h3",
                 "h4",
                 "super",
             };
-            instance.ResumeBookmark(nameBox.Text, list);
-            new Dao().Update(id, false);
+            workflowRun.Resume(nameBox.Text, list);
         }
 
         private void acceptBTN_Click(object sender, EventArgs e)
         {
-            if (instance == null) return;
-            instance.ResumeBookmark(nameBox.Text, true);
+            workflowRun.Resume(nameBox.Text, true);
         }
 
         private void rejectBTN_Click(object sender, EventArgs e)
         {
-            if (instance == null) return;
-            instance.ResumeBookmark(nameBox.Text, false);
+            workflowRun.Resume(nameBox.Text, false);
         }
 
         private void restartBTN_Click(object sender, EventArgs e)
         {
-            instance?.Abort();
+            workflowRun.Abort();
         }
 
         private void WorkFlowEvent(WorkflowApplication app)
@@ -73,13 +68,11 @@ namespace StateMachineExample
             app.Completed = delegate (WorkflowApplicationCompletedEventArgs er)
             {
                 MyInvoke(er);
-                instance = null;
                 Console.WriteLine("workflowCompleted:{0}", er.CompletionState.ToString());
             };
             app.Aborted = delegate (WorkflowApplicationAbortedEventArgs er)
             {
                 MyInvoke(er);
-                instance = null;
                 Console.WriteLine("aborted ,Reason:{0}", er.Reason.Message);
             };
             app.Idle = delegate (WorkflowApplicationIdleEventArgs er)
@@ -93,6 +86,10 @@ namespace StateMachineExample
                 }
                 Console.WriteLine("================================");
 
+            };
+            app.PersistableIdle = delegate (WorkflowApplicationIdleEventArgs er)
+            {
+                return PersistableIdleAction.Unload;
             };
             app.OnUnhandledException = delegate (WorkflowApplicationUnhandledExceptionEventArgs er)
             {
@@ -129,26 +126,28 @@ namespace StateMachineExample
 
         private void MyInvoke(WorkflowApplicationEventArgs er, bool isIdle = false)
         {
-            Invoke(new Action(() =>
-            {
+            //Invoke(new Action(() =>
+            //{
                 nameBox.Items.Clear();
 
                 if (!isIdle)
                 {
                     UpdateControl();
-                    if (instanceStore != null) Close();
                     return;
                 }
 
-                UpdateControl(new Dao().Read(id));
+                bool countersign = false;
                 var idleEr = (WorkflowApplicationIdleEventArgs)er;
                 foreach (var item in idleEr.Bookmarks)
                 {
+                    if (item.BookmarkName == "Countersign")
+                        countersign = true;
                     nameBox.Items.Add(item.BookmarkName);
                 }
+                UpdateControl(countersign);
                 nameBox.SelectedIndex = 0;
 
-            }));
+            //}));
         }
 
     }

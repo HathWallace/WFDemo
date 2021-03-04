@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Activities" />
+    <Reference Include="System.Activities.DurableInstancing" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -49,6 +50,7 @@
     <Compile Include="Toolbox\ComputeResult.cs" />
     <Compile Include="Toolbox\Dao.cs" />
     <Compile Include="Toolbox\ResultBookmark.cs" />
+    <Compile Include="WorkflowRun.cs" />
   </ItemGroup>
   <ItemGroup>
     <XamlAppDef Include="MyWorkflow.xaml">

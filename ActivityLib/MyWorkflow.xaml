@@ -28,18 +28,17 @@
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
-      <AssemblyReference>System</AssemblyReference>
-      <AssemblyReference>System.Core</AssemblyReference>
-      <AssemblyReference>System.Xml.Linq</AssemblyReference>
-      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
-      <AssemblyReference>System.Data</AssemblyReference>
-      <AssemblyReference>System.Net.Http</AssemblyReference>
-      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
       <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>ActivityLib</AssemblyReference>
     </sco:Collection>
@@ -84,12 +83,7 @@
                         </InArgument>
                       </local:Update.Id>
                     </local:Update>
-                    <local1:ResultBookmark x:TypeArguments="scg1:SortedSet(x:String)" sap2010:WorkflowViewState.IdRef="ResultBookmark`1_4">
-                      <local1:ResultBookmark.BookmarkName>
-                        <InArgument x:TypeArguments="x:String">
-                          <mca:CSharpValue x:TypeArguments="x:String">bookmark</mca:CSharpValue>
-                        </InArgument>
-                      </local1:ResultBookmark.BookmarkName>
+                    <local1:ResultBookmark x:TypeArguments="scg1:SortedSet(x:String)" BookmarkName="Countersign" sap2010:WorkflowViewState.IdRef="ResultBookmark`1_4">
                       <local1:ResultBookmark.Result>
                         <OutArgument x:TypeArguments="scg1:SortedSet(x:String)">
                           <mca:CSharpReference x:TypeArguments="scg1:SortedSet(x:String)">nameList</mca:CSharpReference>
@@ -233,7 +227,7 @@
     <StateMachine.Variables>
       <Variable x:TypeArguments="x:String" Default="Workflow" Name="bookmark" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>d1NEOlw2Q29kaW5nXE15R2l0SHViXEhlbGxvV29ya2Zsb3dcSGVsbG9Xb3JrZmxvd1xTdGF0ZU1hY2hpbmVMaWJyYXJ5XE15V29ya2Zsb3cueGFtbDsvA+0BEgIBAeoBNOoBPgIBfjEH4gEPAgFdTQ/NARcCAS50F7cBHwIBDZABH5QBJwIBCZ8BH6oBJwIBAjMLSBYCAWzTAQ/TAVQCAWfQAQ/QAVYCAWXbAQ/bAVUCAWHYAQ/YAVYCAV9PE28eAgE/vQEXvQFaAgE5ugEXugFeAgE3xQEXxQFbAgEywgEXwgFfAgEwdhuLASYCARyaAR+aAWQCAReXAR+XAWcCARWwAR+wAWUCARGtAR+tAWcCAQ+SASOSAWoCAQuhASOhAWoCAQemASemAW4CAQQ0DTocAgF4Ow07VAIBdjwNRyUCAW3QAU3QAVMCAWbYAU3YAVMCAWBQFVYkAgFWVxViLQIBS2MVbikCAUC6AVW6AVsCATjCAVbCAVwCATF3HX0sAgEofh1+ZAIBJn8digE1AgEdlwFelwFkAgEWrQFerQFkAgEQkgFhkgFnAgEMoQFhoQFnAgEIpgFlpgFrAgEFNFQ0WwIBfTcTN1ICAXk7SztRAgF3PxM/WQIBckQTRGACAW5QXFBiAgFcUxtTWgIBV1obWmECAVFfG195AgFMaxtrZgIBRmYbZnECAUF3ZHdrAgEteiN6YgIBKX5bfmECASeCASOCAWkCASKHASOHAXACAR4=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzZEOlw2Q29kaW5nXE15R2l0SHViXFdGRGVtb1xBY3Rpdml0eUxpYlxNeVdvcmtmbG93LnhhbWw7LgPnARICAQHkATTkAT4CAXowB9wBDwIBWUwPxwEXAgEubhexAR8CAQ2KAR+OAScCAQmZAR+kAScCAQIyC0cWAgFozQEPzQFUAgFjygEPygFWAgFh1QEP1QFVAgFd0gEP0gFWAgFbThNpHgIBP7cBF7cBWgIBObQBF7QBXgIBN78BF78BWwIBMrwBF7wBXwIBMHAbhQEmAgEclAEflAFkAgEXkQEfkQFnAgEVqgEfqgFlAgERpwEfpwFnAgEPjAEjjAFqAgELmwEjmwFqAgEHoAEnoAFuAgEEMw05HAIBdDoNOlQCAXI7DUYlAgFpygFNygFTAgFi0gFN0gFTAgFcTxVVJAIBUlYVXC0CAUtdFWgpAgFAtAFVtAFbAgE4vAFWvAFcAgExcR13LAIBKHgdeGQCASZ5HYQBNQIBHZEBXpEBZAIBFqcBXqcBZAIBEIwBYYwBZwIBDJsBYZsBZwIBCKABZaABawIBBTNUM1sCAXk2EzZSAgF1Oks6UQIBcz4TPlkCAW5DE0NgAgFqT1xPYgIBWFIbUloCAVNWZFZxAgFRWRtZeQIBTGUbZWYCAUZgG2BxAgFBcWRxawIBLXQjdGICASl4W3hhAgEnfCN8aQIBIoEBI4EBcAIBHg==</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -346,7 +340,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="114,61">
+      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="326,669">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">313,229.5</av:Point>

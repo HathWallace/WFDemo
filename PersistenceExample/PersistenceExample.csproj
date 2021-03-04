@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D7927722-1A5C-4C1F-B2C3-AB8E73A8D6A4}</ProjectGuid>
+    <ProjectGuid>{642CD414-FDE0-4155-AEAD-6CF3F81A1E90}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StateMachineExample</RootNamespace>
-    <AssemblyName>StateMachineExample</AssemblyName>
+    <RootNamespace>PersistenceExample</RootNamespace>
+    <AssemblyName>PersistenceExample</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -52,16 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WorkflowForm.cs">
+    <Compile Include="PersistenceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WorkflowForm.Designer.cs">
-      <DependentUpon>WorkflowForm.cs</DependentUpon>
+    <Compile Include="PersistenceForm.Designer.cs">
+      <DependentUpon>PersistenceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="WorkflowForm.resx">
-      <DependentUpon>WorkflowForm.cs</DependentUpon>
+    <EmbeddedResource Include="PersistenceForm.resx">
+      <DependentUpon>PersistenceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -89,6 +89,10 @@
     <ProjectReference Include="..\ActivityLib\ActivityLib.csproj">
       <Project>{bd938e3a-39ce-403d-bb19-a7d3c3fe8ef0}</Project>
       <Name>ActivityLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StateMachineExample\StateMachineExample.csproj">
+      <Project>{d7927722-1a5c-4c1f-b2c3-ab8e73a8d6a4}</Project>
+      <Name>StateMachineExample</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

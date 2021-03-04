@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachineExample", "Stat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ActivityLib", "ActivityLib\ActivityLib.csproj", "{BD938E3A-39CE-403D-BB19-A7D3C3FE8EF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistenceExample", "PersistenceExample\PersistenceExample.csproj", "{642CD414-FDE0-4155-AEAD-6CF3F81A1E90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BD938E3A-39CE-403D-BB19-A7D3C3FE8EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD938E3A-39CE-403D-BB19-A7D3C3FE8EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD938E3A-39CE-403D-BB19-A7D3C3FE8EF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{642CD414-FDE0-4155-AEAD-6CF3F81A1E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{642CD414-FDE0-4155-AEAD-6CF3F81A1E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{642CD414-FDE0-4155-AEAD-6CF3F81A1E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{642CD414-FDE0-4155-AEAD-6CF3F81A1E90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

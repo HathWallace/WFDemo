@@ -13,7 +13,7 @@ namespace ActivityLib.Toolbox
         {
             string bookmark = context.GetValue(BookmarkName);
             context.CreateBookmark(bookmark, BookmarkCallback);
-            Console.WriteLine("创建bookmark:{0}", bookmark);
+            //Console.WriteLine("创建bookmark:{0}", bookmark);
         }
 
         private void BookmarkCallback(NativeActivityContext context, Bookmark bookmark, object obj)
