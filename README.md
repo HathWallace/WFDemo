@@ -28,7 +28,7 @@
 
 ## StateMachineExample
 
-状态机工作流实例，其流程图如下。
+状态机工作流实例，其流程图如下。可下载 [StateMachineExample.zip](https://github.com/HathWallace/WFDemo/releases/download/v1.0/StateMachineExample.zip) 试运行。
 
 ![流程审批2](https://gitee.com/MouZhuangZi/pic-go/raw/master/%E6%B5%81%E7%A8%8B%E5%AE%A1%E6%89%B92.png)
 
@@ -38,7 +38,7 @@
 
 ## PersistenceExample
 
-持久化工作流实例，流程图同上。运行前需进行持久化配置，配置步骤如下：
+持久化工作流实例，流程图同上。可下载 [PersistenceExample.zip](https://github.com/HathWallace/WFDemo/releases/download/v1.0/PersistenceExample.zip) 试运行。运行前需进行持久化配置，配置步骤如下：
 
 1. 下载安装SQL Server。
 
