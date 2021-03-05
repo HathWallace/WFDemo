@@ -14,7 +14,8 @@ namespace ActivityLib
         public string InstanceId => wfApp?.Id.ToString() ?? "";
 
         public static string SqlConfig =>
-            $@"Data Source={Environment.MachineName};Initial Catalog=WorkflowDB;Integrated Security=TRUE";
+            $"Data Source={Environment.MachineName};Initial Catalog=WorkFlowDB;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+           // $@"Data Source={Environment.MachineName};Initial Catalog=WorkflowDB;Integrated Security=TRUE";
 
         private Delegate refreshEvent;
 

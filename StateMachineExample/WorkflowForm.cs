@@ -90,6 +90,7 @@ namespace StateMachineExample
             if (!isIdle)
             {
                 UpdateControl();
+                nameBox.Text = "";
                 return;
             }
 

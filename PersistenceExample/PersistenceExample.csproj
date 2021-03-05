@@ -90,10 +90,6 @@
       <Project>{bd938e3a-39ce-403d-bb19-a7d3c3fe8ef0}</Project>
       <Name>ActivityLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StateMachineExample\StateMachineExample.csproj">
-      <Project>{d7927722-1a5c-4c1f-b2c3-ab8e73a8d6a4}</Project>
-      <Name>StateMachineExample</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

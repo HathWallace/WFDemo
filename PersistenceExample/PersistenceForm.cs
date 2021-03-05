@@ -69,6 +69,11 @@ namespace PersistenceExample
             workflowRun.Resume(nameBox.Text, list);
         }
 
+        private void PersistenceForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            workflowRun?.Dispose();
+        }
+
         private string[] GetGuids()
         {
             string str = "SELECT Id FROM [System.Activities.DurableInstancing].InstancesTable;";

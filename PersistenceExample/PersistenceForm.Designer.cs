@@ -163,6 +163,7 @@
             this.Controls.Add(this.loadBTN);
             this.Name = "PersistenceForm";
             this.Text = "持久化示例";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PersistenceForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
