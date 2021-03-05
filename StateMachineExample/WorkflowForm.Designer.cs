@@ -83,7 +83,7 @@
             this.restartBTN.Name = "restartBTN";
             this.restartBTN.Size = new System.Drawing.Size(75, 23);
             this.restartBTN.TabIndex = 1;
-            this.restartBTN.Text = "重新开始";
+            this.restartBTN.Text = "取消流程";
             this.restartBTN.UseVisualStyleBackColor = true;
             this.restartBTN.Click += new System.EventHandler(this.restartBTN_Click);
             // 
@@ -104,7 +104,7 @@
             this.nameBox.Size = new System.Drawing.Size(114, 20);
             this.nameBox.TabIndex = 4;
             // 
-            // MainForm
+            // WorkflowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -116,7 +116,7 @@
             this.Controls.Add(this.rejectBTN);
             this.Controls.Add(this.acceptBTN);
             this.Controls.Add(this.startBTN);
-            this.Name = "MainForm";
+            this.Name = "WorkflowForm";
             this.Text = "流程处理";
             this.ResumeLayout(false);
             this.PerformLayout();

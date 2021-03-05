@@ -2,6 +2,7 @@
 using System.Activities;
 using System.Activities.DurableInstancing;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.DurableInstancing;
 using System.Threading;
 
@@ -13,9 +14,9 @@ namespace ActivityLib
     {
         public string InstanceId => wfApp?.Id.ToString() ?? "";
 
-        public static string SqlConfig =>
-            $"Data Source={Environment.MachineName};Initial Catalog=WorkFlowDB;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-           // $@"Data Source={Environment.MachineName};Initial Catalog=WorkflowDB;Integrated Security=TRUE";
+        //public static string SqlConfig => $@"Data Source={Environment.MachineName};Initial Catalog=WorkflowDB;Integrated Security=TRUE";
+
+        public static string SqlConfig => File.ReadAllText("SqlConfig.txt");
 
         private Delegate refreshEvent;
 

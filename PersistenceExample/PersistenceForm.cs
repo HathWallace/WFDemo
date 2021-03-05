@@ -15,6 +15,16 @@ namespace PersistenceExample
         public PersistenceForm()
         {
             InitializeComponent();
+        }
+
+        private void PersistenceForm_Load(object sender, EventArgs e)
+        {
+            if (!ConnectionTest())
+            {
+                MessageBox.Show("请先配置SQL Server，然后将连接语句以SqlConfig.txt的形式与该exe程序保存在同一文件夹内。", "详细步骤见README文件。");
+                Close();
+                return;
+            }
 
             CheckForIllegalCrossThreadCalls = false;
             UpdateGuids();
@@ -24,15 +34,16 @@ namespace PersistenceExample
 
         private void createBTN_Click(object sender, EventArgs e)
         {
-            workflowRun = new WorkflowRun(0, MyInvoke, true);
+            workflowRun = new WorkflowRun(0, UpdateControls, true);
             guidBox.Items.Add(workflowRun.InstanceId);
             guidBox.SelectedItem = workflowRun.InstanceId;
         }
 
         private void loadBTN_Click(object sender, EventArgs e)
         {
+            if (guidBox.Text == "") return;
             workflowRun?.Dispose();
-            workflowRun = new WorkflowRun(guidBox.Text, MyInvoke);
+            workflowRun = new WorkflowRun(guidBox.Text, UpdateControls);
         }
 
         private void unloadBTN_Click(object sender, EventArgs e)
@@ -72,6 +83,22 @@ namespace PersistenceExample
         private void PersistenceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             workflowRun?.Dispose();
+        }
+
+        private bool ConnectionTest()
+        {
+            try
+            {
+                var conn = new SqlConnection(WorkflowRun.SqlConfig);
+                conn.Open();
+                conn.Close();
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private string[] GetGuids()
@@ -152,7 +179,7 @@ namespace PersistenceExample
 
         }
 
-        private void MyInvoke(WorkflowApplicationIdleEventArgs er = null, bool isIdle = false)
+        private void UpdateControls(WorkflowApplicationIdleEventArgs er = null, bool isIdle = false)
         {
             bool? countersign;
 
