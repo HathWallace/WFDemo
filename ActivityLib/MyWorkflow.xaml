@@ -31,8 +31,10 @@
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.DurableInstancing</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.DurableInstancing</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
@@ -48,14 +50,13 @@
       <State x:Name="__ReferenceID0" DisplayName="初审" sap2010:WorkflowViewState.IdRef="State_1">
         <State.Entry>
           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
-            <local:Update sap2010:WorkflowViewState.IdRef="Update_1" IsCounterSign="False">
+            <local:Update sap2010:WorkflowViewState.IdRef="Update_4" State="初审">
               <local:Update.Id>
                 <InArgument x:TypeArguments="x:Int32">
                   <mca:CSharpValue x:TypeArguments="x:Int32">Id</mca:CSharpValue>
                 </InArgument>
               </local:Update.Id>
             </local:Update>
-            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="开始初审" />
             <local1:ResultBookmark x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="ResultBookmark`1_1">
               <local1:ResultBookmark.BookmarkName>
                 <InArgument x:TypeArguments="x:String">
@@ -76,7 +77,7 @@
               <State x:Name="__ReferenceID2" DisplayName="会签" sap2010:WorkflowViewState.IdRef="State_4">
                 <State.Entry>
                   <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
-                    <local:Update sap2010:WorkflowViewState.IdRef="Update_3" IsCounterSign="True">
+                    <local:Update sap2010:WorkflowViewState.IdRef="Update_5" State="会签">
                       <local:Update.Id>
                         <InArgument x:TypeArguments="x:Int32">
                           <mca:CSharpValue x:TypeArguments="x:Int32">Id</mca:CSharpValue>
@@ -110,14 +111,13 @@
                       <State x:Name="__ReferenceID3" DisplayName="终审" sap2010:WorkflowViewState.IdRef="State_3">
                         <State.Entry>
                           <Sequence sap2010:WorkflowViewState.IdRef="Sequence_2">
-                            <local:Update sap2010:WorkflowViewState.IdRef="Update_2" IsCounterSign="False">
+                            <local:Update sap2010:WorkflowViewState.IdRef="Update_6" State="终审">
                               <local:Update.Id>
                                 <InArgument x:TypeArguments="x:Int32">
                                   <mca:CSharpValue x:TypeArguments="x:Int32">Id</mca:CSharpValue>
                                 </InArgument>
                               </local:Update.Id>
                             </local:Update>
-                            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="开始终审" />
                             <local1:ResultBookmark x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="ResultBookmark`1_2">
                               <local1:ResultBookmark.BookmarkName>
                                 <InArgument x:TypeArguments="x:String">
@@ -137,7 +137,13 @@
                             <Transition.To>
                               <State x:Name="__ReferenceID4" DisplayName="FinalState" sap2010:WorkflowViewState.IdRef="State_2" IsFinal="True">
                                 <State.Entry>
-                                  <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="流程结束" />
+                                  <local:Update sap2010:WorkflowViewState.IdRef="Update_7" State="结束">
+                                    <local:Update.Id>
+                                      <InArgument x:TypeArguments="x:Int32">
+                                        <mca:CSharpValue x:TypeArguments="x:Int32">Id</mca:CSharpValue>
+                                      </InArgument>
+                                    </local:Update.Id>
+                                  </local:Update>
                                 </State.Entry>
                               </State>
                             </Transition.To>
@@ -152,7 +158,13 @@
                             <Transition.To>
                               <State x:Name="__ReferenceID1" DisplayName="修改" sap2010:WorkflowViewState.IdRef="State_5">
                                 <State.Entry>
-                                  <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="正在修改" />
+                                  <local:Update sap2010:WorkflowViewState.IdRef="Update_8" State="修改">
+                                    <local:Update.Id>
+                                      <InArgument x:TypeArguments="x:Int32">
+                                        <mca:CSharpValue x:TypeArguments="x:Int32">Id</mca:CSharpValue>
+                                      </InArgument>
+                                    </local:Update.Id>
+                                  </local:Update>
                                 </State.Entry>
                                 <State.Transitions>
                                   <Transition DisplayName="重新审核" sap2010:WorkflowViewState.IdRef="Transition_4" To="{x:Reference __ReferenceID0}">
@@ -227,21 +239,20 @@
     <StateMachine.Variables>
       <Variable x:TypeArguments="x:String" Default="Workflow" Name="bookmark" />
     </StateMachine.Variables>
-    <sads:DebugSymbol.Symbol>dzZEOlw2Q29kaW5nXE15R2l0SHViXFdGRGVtb1xBY3Rpdml0eUxpYlxNeVdvcmtmbG93LnhhbWw7LgPnARICAQHkATTkAT4CAXowB9wBDwIBWUwPxwEXAgEubhexAR8CAQ2KAR+OAScCAQmZAR+kAScCAQIyC0cWAgFozQEPzQFUAgFjygEPygFWAgFh1QEP1QFVAgFd0gEP0gFWAgFbThNpHgIBP7cBF7cBWgIBObQBF7QBXgIBN78BF78BWwIBMrwBF7wBXwIBMHAbhQEmAgEclAEflAFkAgEXkQEfkQFnAgEVqgEfqgFlAgERpwEfpwFnAgEPjAEjjAFqAgELmwEjmwFqAgEHoAEnoAFuAgEEMw05HAIBdDoNOlQCAXI7DUYlAgFpygFNygFTAgFi0gFN0gFTAgFcTxVVJAIBUlYVXC0CAUtdFWgpAgFAtAFVtAFbAgE4vAFWvAFcAgExcR13LAIBKHgdeGQCASZ5HYQBNQIBHZEBXpEBZAIBFqcBXqcBZAIBEIwBYYwBZwIBDJsBYZsBZwIBCKABZaABawIBBTNUM1sCAXk2EzZSAgF1Oks6UQIBcz4TPlkCAW5DE0NgAgFqT1xPYgIBWFIbUloCAVNWZFZxAgFRWRtZeQIBTGUbZWYCAUZgG2BxAgFBcWRxawIBLXQjdGICASl4W3hhAgEnfCN8aQIBIoEBI4EBcAIBHg==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dzZEOlw2Q29kaW5nXE15R2l0SHViXFdGRGVtb1xBY3Rpdml0eUxpYlxNeVdvcmtmbG93LnhhbWw5MAPzARICAQHwATTwAT4CAXwyB+gBDwIBXU0P0wEXAgEybxe9AR8CAROKAR+UAScCAQyfAR+wAScCAQI0C0gWAgFs2QEP2QFUAgFn1gEP1gFWAgFl4QEP4QFVAgFh3gEP3gFWAgFfTxNqHgIBQ8MBF8MBWgIBPcABF8ABXgIBO8sBF8sBWwIBNsgBF8gBXwIBNHEbhQEmAgEimgEfmgFkAgEdlwEflwFnAgEbtgEftgFlAgEXswEfswFnAgEVjAEjkgEyAgEOoQEjpwEyAgEHrAEnrAFuAgEENQ07HAIBdjwNRyUCAW3WAU3WAVMCAWbeAU3eAVMCAWBQFVYkAgFWVxVdLQIBT14VaSkCAUTAAVXAAVsCATzIAVbIAVwCATVyHXgsAgEseR2EATUCASOXAV6XAWQCARyzAV6zAWQCARaPASmPAWgCARCMAWKMAWYCAQ+kASmkAWgCAQmhAWKhAWYCAQisAWWsAWsCAQU4EzhSAgF4NUw1UAIBdz8TP1kCAXJEE0RgAgFuUxtTWgIBWFBUUFgCAVdXZFdxAgFVWhtaeQIBUGYbZmYCAUphG2FxAgFFdSN1YgIBLnJccmACAS18I3xpAgEogQEjgQFwAgEk</sads:DebugSymbol.Symbol>
   </StateMachine>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="Update_1" sap:VirtualizedContainerService.HintSize="213,22" />
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="213,63" />
-      <sap2010:ViewStateData Id="ResultBookmark`1_1" sap:VirtualizedContainerService.HintSize="213,22" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="235,311">
+      <sap2010:ViewStateData Id="Update_4" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="ResultBookmark`1_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="222,208">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Update_3" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Update_5" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="ResultBookmark`1_4" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="CounterSign_2" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="222,270">
@@ -251,18 +262,17 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Update_2" sap:VirtualizedContainerService.HintSize="213,22" />
-      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,63" />
-      <sap2010:ViewStateData Id="ResultBookmark`1_2" sap:VirtualizedContainerService.HintSize="213,22" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="235,311">
+      <sap2010:ViewStateData Id="Update_6" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="ResultBookmark`1_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="222,208">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="213,76" />
-      <sap2010:ViewStateData Id="State_2" sap:VirtualizedContainerService.HintSize="114,61">
+      <sap2010:ViewStateData Id="Update_7" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="State_2" sap:VirtualizedContainerService.HintSize="326,225">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">723,229.5</av:Point>
@@ -281,7 +291,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WriteLine_5" sap:VirtualizedContainerService.HintSize="213,63" />
+      <sap2010:ViewStateData Id="Update_8" sap:VirtualizedContainerService.HintSize="200,22" />
       <sap2010:ViewStateData Id="WriteLine_8" sap:VirtualizedContainerService.HintSize="213,63" />
       <sap2010:ViewStateData Id="Transition_4" sap:VirtualizedContainerService.HintSize="430,520">
         <sap:WorkflowViewStateService.ViewState>
@@ -340,7 +350,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="326,669">
+      <sap2010:ViewStateData Id="State_4" sap:VirtualizedContainerService.HintSize="114,61">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">313,229.5</av:Point>

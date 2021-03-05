@@ -1,88 +1,161 @@
 ﻿using System;
 using System.Activities;
-using System.Activities.DurableInstancing;
+using System.Activities.Hosting;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 using ActivityLib;
-using StateMachineExample;
 
 namespace PersistenceExample
 {
     public partial class PersistenceForm : Form
     {
-        private string sqlConfig => $@"Data Source={Environment.MachineName};Initial Catalog=WorkflowDB;Integrated Security=TRUE";
-
-        private SqlWorkflowInstanceStore instanceStore;
+        private WorkflowRun workflowRun;
 
         public PersistenceForm()
         {
             InitializeComponent();
-            instanceStore = new SqlWorkflowInstanceStore(sqlConfig);
+
+            CheckForIllegalCrossThreadCalls = false;
+            UpdateGuids();
+            UpdateButton();
+
         }
 
         private void createBTN_Click(object sender, EventArgs e)
         {
-            var dict = new Dictionary<string, object> {{"Id", 0}};
-            var wfApp = new WorkflowApplication(new MyWorkflow(), dict);
-            var syncEvent = new AutoResetEvent(false);
-            WorkFlowEvent(wfApp, syncEvent);
-            wfApp.InstanceStore = instanceStore;
-            wfApp.Run();
-            syncEvent.WaitOne();
+            workflowRun = new WorkflowRun(0, MyInvoke, true);
+            guidBox.Items.Add(workflowRun.InstanceId);
+            guidBox.SelectedItem = workflowRun.InstanceId;
         }
 
-        private void WorkFlowEvent(WorkflowApplication app, AutoResetEvent syncEvent)
+        private void loadBTN_Click(object sender, EventArgs e)
         {
-            #region 工作流生命周期事件
-            app.Unloaded = delegate (WorkflowApplicationEventArgs er)
-            {
-                Console.WriteLine("工作流 {0} 卸载.", er.InstanceId);
-                syncEvent.Set();
-            };
-            app.Completed = delegate (WorkflowApplicationCompletedEventArgs er)
-            {
-                Console.WriteLine("工作流 {0} 完成.", er.InstanceId);
-                syncEvent.Set();
-            };
-            app.Aborted = delegate (WorkflowApplicationAbortedEventArgs er)
-            {
-                Console.WriteLine("工作流 {0} 终止.", er.InstanceId);
-            };
-            app.Idle = delegate (WorkflowApplicationIdleEventArgs er)
-            {
-                Console.WriteLine("工作流 {0} 空闲.", er.InstanceId);
-                syncEvent.Set(); //这里要唤醒，不让的话，当创建了一个书签之后，界面就卡死了。
-            };
-            app.PersistableIdle = delegate (WorkflowApplicationIdleEventArgs er)
-            {
-                Console.WriteLine("持久化 {0} ", er.InstanceId);
-                return PersistableIdleAction.Unload;
-                //return PersistableIdleAction.Persist;
-            };
-            app.OnUnhandledException = delegate (WorkflowApplicationUnhandledExceptionEventArgs er)
-            {
-                Console.WriteLine("OnUnhandledException in Workflow {0}\n{1}", er.InstanceId, er.UnhandledException.Message);
-                return UnhandledExceptionAction.Terminate;
-            };
-            #endregion
+            workflowRun?.Dispose();
+            workflowRun = new WorkflowRun(guidBox.Text, MyInvoke);
         }
 
-        private void runBTN_Click(object sender, EventArgs e)
+        private void unloadBTN_Click(object sender, EventArgs e)
         {
-            if (instanceIdTXT.Text == "")
+            workflowRun?.Dispose();
+        }
+
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            if (guidBox.Text != "") loadBTN_Click(sender, e);
+            workflowRun?.Cancel();
+            workflowRun = null;
+        }
+
+        private void acceptBTN_Click(object sender, EventArgs e)
+        {
+            workflowRun.Resume(nameBox.Text, true);
+        }
+
+        private void rejectBTN_Click(object sender, EventArgs e)
+        {
+            workflowRun.Resume(nameBox.Text, false);
+        }
+
+        private void getNamesBTN_Click(object sender, EventArgs e)
+        {
+            var list = new SortedSet<string>
             {
-                MessageBox.Show("请输入Guid");
+                "h2",
+                "h3",
+                "h4",
+                "super",
+            };
+            workflowRun.Resume(nameBox.Text, list);
+        }
+
+        private string[] GetGuids()
+        {
+            string str = "SELECT Id FROM [System.Activities.DurableInstancing].InstancesTable;";
+            var list = new List<string>();
+
+            using (var conn = new SqlConnection(WorkflowRun.SqlConfig))
+            {
+                conn.Open();
+
+                var dataReader = new SqlCommand(str, conn).ExecuteReader();
+                while (dataReader.Read())
+                {
+                    list.Add(dataReader["Id"].ToString());
+                }
+
+                conn.Close();
+
+            }
+
+            return list.ToArray();
+        }
+
+        private void UpdateGuids()
+        {
+            guidBox.Items.Clear();
+            guidBox.Items.AddRange(GetGuids());
+            if (guidBox.Items.Count != 0)
+                guidBox.SelectedIndex = 0;
+            else
+                guidBox.Text = "";
+
+        }
+
+        private void UpdateBookmark(IEnumerable<BookmarkInfo> bookmarks, out bool? countersign)
+        {
+            nameBox.Items.Clear();
+            if (bookmarks == null)
+            {
+                countersign = null;
+                nameBox.Text = "";
                 return;
             }
-            var frm = new WorkflowForm();
-            frm.Show();
+
+            countersign = false;
+            foreach (var item in bookmarks)
+            {
+                if (item.BookmarkName == "Countersign")
+                    countersign = true;
+                nameBox.Items.Add(item.BookmarkName);
+            }
+            nameBox.SelectedIndex = 0;
+
         }
+
+        private void UpdateButton(bool? state = null)
+        {
+            createBTN.Enabled = false;
+            getNamesBTN.Enabled = false;
+            acceptBTN.Enabled = false;
+            rejectBTN.Enabled = false;
+
+            if (state == null)
+            {
+                createBTN.Enabled = true;
+                nameBox.Items.Clear();
+            }
+            else if (!(bool)state)
+            {
+                acceptBTN.Enabled = true;
+                rejectBTN.Enabled = true;
+            }
+            else
+            {
+                getNamesBTN.Enabled = true;
+            }
+
+        }
+
+        private void MyInvoke(WorkflowApplicationIdleEventArgs er = null, bool isIdle = false)
+        {
+            bool? countersign;
+
+            UpdateGuids();
+            UpdateBookmark(er?.Bookmarks, out countersign);
+            UpdateButton(countersign);
+
+        }
+
     }
 }

@@ -52,7 +52,6 @@
       </Variable>
       <Variable x:TypeArguments="x:Boolean" Name="result" />
     </Sequence.Variables>
-    <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="开始会签" />
     <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_1">
       <ParallelForEach.Values>
         <InArgument x:TypeArguments="scg1:IEnumerable(x:String)">
@@ -106,11 +105,10 @@
         </InArgument>
       </local:ComputeResult.ResultList>
     </local:ComputeResult>
-    <sads:DebugSymbol.Symbol>d11EOlw2Q29kaW5nXE15R2l0SHViXEhlbGxvV29ya2Zsb3dcSGVsbG9Xb3JrZmxvd1xTdGF0ZU1hY2hpbmVMaWJyYXJ5XFNlcXVlbmNlXENvdW50ZXJTaWduLnhhbWwSLgNuDgIBATILMmsCAQI3BTdMAgE6OAVgFwIBEmEFbBsCAQc3QzdJAgE7Ows7YwIBNUIJXhQCARNkC2RWAgENaQtpXwIBCEMLTiICAShPC1MXAgEhVAtdHQIBFEYRRlMCAS9LEUteAgEpUQ9RYAIBIlsPW2oCARtXEVdWAgEV</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0BEOlw2Q29kaW5nXE15R2l0SHViXFdGRGVtb1xBY3Rpdml0eUxpYlxTZXF1ZW5jZVxDb3VudGVyU2lnbi54YW1sEC4DbQ4CAQEyCzJrAgECNwVfFwIBEmAFaxsCAQc6CzpjAgE1QQldFAIBE2MLY1YCAQ1oC2hfAgEIQgtNIgIBKE4LUhcCASFTC1wdAgEURRFFUwIBL0oRSl4CASlQD1BgAgEiWg9aagIBG1YRVlYCARU=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="291,63" />
       <sap2010:ViewStateData Id="ResultBookmark`1_1" sap:VirtualizedContainerService.HintSize="213,22" />
       <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="213,63" />
       <sap2010:ViewStateData Id="AddToCollection`1_1" sap:VirtualizedContainerService.HintSize="213,22" />
@@ -123,14 +121,14 @@
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ParallelForEach`1_1" sap:VirtualizedContainerService.HintSize="291,462" />
       <sap2010:ViewStateData Id="ComputeResult_1" sap:VirtualizedContainerService.HintSize="291,22" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="313,751">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="313,648">
         <sap:WorkflowViewStateService.ViewState>
           <scg1:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg1:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ActivityLib.Sequence.CounterSign_1" sap:VirtualizedContainerService.HintSize="353,831" />
+      <sap2010:ViewStateData Id="ActivityLib.Sequence.CounterSign_1" sap:VirtualizedContainerService.HintSize="353,728" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

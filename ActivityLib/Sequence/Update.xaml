@@ -11,7 +11,7 @@
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="Id" Type="InArgument(x:Int32)" />
-    <x:Property Name="IsCounterSign" Type="InArgument(x:Boolean)" />
+    <x:Property Name="State" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>ActivityLib.Sequence.Update_1</sap2010:WorkflowViewState.IdRef>
@@ -26,18 +26,19 @@
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
-      <AssemblyReference>System</AssemblyReference>
-      <AssemblyReference>System.Core</AssemblyReference>
-      <AssemblyReference>System.Xml.Linq</AssemblyReference>
-      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
-      <AssemblyReference>System.Data</AssemblyReference>
-      <AssemblyReference>System.Net.Http</AssemblyReference>
-      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.DurableInstancing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.DurableInstancing</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
       <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>ActivityLib</AssemblyReference>
     </sco:Collection>
@@ -52,11 +53,11 @@
       <InArgument x:TypeArguments="x:Int32">
         <mca:CSharpValue x:TypeArguments="x:Int32">Id</mca:CSharpValue>
       </InArgument>
-      <InArgument x:TypeArguments="x:Boolean">
-        <mca:CSharpValue x:TypeArguments="x:Boolean">IsCounterSign</mca:CSharpValue>
+      <InArgument x:TypeArguments="x:String">
+        <mca:CSharpValue x:TypeArguments="x:String">State</mca:CSharpValue>
       </InArgument>
     </InvokeMethod>
-    <sads:DebugSymbol.Symbol>d1hEOlw2Q29kaW5nXE15R2l0SHViXEhlbGxvV29ya2Zsb3dcSGVsbG9Xb3JrZmxvd1xTdGF0ZU1hY2hpbmVMaWJyYXJ5XFNlcXVlbmNlXFVwZGF0ZS54YW1sBS0DPA4CAQEuBToUAgECOAk4VQIBCTELMW8CAQY1CTVIAgED</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>dztEOlw2Q29kaW5nXE15R2l0SHViXFdGRGVtb1xBY3Rpdml0eUxpYlxTZXF1ZW5jZVxVcGRhdGUueGFtbAUuAz0OAgEBLwU7FAIBAjkJOUwCAQk2CTZIAgEGMgsyZwIBAw==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

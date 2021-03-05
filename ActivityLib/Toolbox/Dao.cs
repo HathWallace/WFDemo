@@ -1,47 +1,19 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
 
 namespace ActivityLib.Toolbox
 {
     public class Dao
     {
-        public static string Path => "Dao.xml";
-
-        public void Create(int id)
+        public void Update(int id, string stateName)
         {
-            if (!File.Exists(Path)) CreateXml();
-
-            var xd = new XmlDocument();
-            xd.Load(Path);
-
-            var node = xd.CreateElement("workflow");
-            node.SetAttribute("Id", id.ToString());
-            node.SetAttribute("IsCounterSign", false.ToString());
-            xd.SelectSingleNode("Workflow").AppendChild(node);
-
-            xd.Save(Path);
+            //写入数据库
+            if (stateName != "结束")
+                Console.WriteLine($"流程{id}开始{stateName}。");
+            else
+                Console.WriteLine($"流程{id}已结束。");
         }
 
-        private void CreateXml()
-        {
-            var xd = new XmlDocument();
-            xd.AppendChild(xd.CreateXmlDeclaration("1.0", "utf-8", null));
-            xd.AppendChild(xd.CreateElement("Workflow"));
-            xd.Save(Path);
-        }
-
-        public void Update(int id, bool isCounterSign)
-        {
-            if (!File.Exists(Path)) return;
-
-            var xd = new XmlDocument();
-            xd.Load(Path);
-
-            var node = xd.SelectSingleNode($"Workflow/workflow[@Id={id}]");
-            if (node == null) return;
-            node.Attributes["IsCounterSign"].Value = isCounterSign.ToString();
-
-            xd.Save(Path);
-        }
     }
 }
